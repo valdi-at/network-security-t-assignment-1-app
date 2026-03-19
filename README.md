@@ -4,7 +4,7 @@
 
 | Name                        | NRP        | Group    |
 |-----------------------------|------------|----------|
-| Mohamad Valdi Ananda Tauhid | 5025221238 | KeyCloak |
+| Mohamad Valdi Ananda Tauhid | 5025221238 | opensmh  |
 
 ### Deployments
 
