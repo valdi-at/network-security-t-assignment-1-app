@@ -33,3 +33,14 @@
 
 ## Repository Information
 This repository contains the application that will be used to integrate to the OIDC that will tested. The app will be written in the Rust Programming Language.
+
+### Environment Variable
+
+#### Example
+``` bash
+LEPTOS_OUTPUT_NAME="network-security-t-assignment-1-app"
+LEPTOS_SITE_ROOT="site"
+LEPTOS_SITE_PKG_DIR="pkg"
+LEPTOS_SITE_ADDR="127.0.0.1:3000"
+LEPTOS_RELOAD_PORT="3001"
+```
