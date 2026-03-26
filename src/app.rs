@@ -6,7 +6,8 @@ use leptos_router::{
 };
 
 use crate::{
-    components::hooks::use_theme_mode::ThemeMode, pages::err404::Err404Page, pages::home::HomePage,
+    components::hooks::use_theme_mode::ThemeMode, components::navbar::Navbar,
+    pages::err404::Err404Page, pages::home::HomePage,
 };
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -35,7 +36,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <HydrationScripts options/>
                 <MetaTags/>
             </head>
-            <body class="bg-background text-foreground min-h-screen flex items-center justify-center px-4">
+            <body class="bg-background text-foreground min-h-screen">
                 <App/>
             </body>
         </html>
@@ -71,9 +72,11 @@ pub fn App() -> impl IntoView {
         // sets the document title
         <Title text="Welcome to Leptos"/>
 
+        <Navbar/>
+
         // content for this welcome page
         <Router>
-            <main>
+            <main class="flex items-center justify-center min-h-screen">
                 <Routes fallback=move || Err404Page>
                     <Route path=StaticSegment("") view=HomePage/>
                 </Routes>
