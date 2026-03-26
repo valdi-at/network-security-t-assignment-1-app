@@ -5,6 +5,10 @@ use leptos_router::{
     StaticSegment,
 };
 
+use crate::{
+    components::hooks::use_theme_mode::ThemeMode, pages::err404::Err404Page, pages::home::HomePage,
+};
+
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
         <!DOCTYPE html>
@@ -12,11 +16,26 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
             <head>
                 <meta charset="utf-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <script>
+                    {r#"
+                    (function () {
+                    try {
+                        const stored = localStorage.getItem("darkmode");
+                        const system = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                        const isDark = stored !== null ? stored === "true" : system;
+
+                        if (!isDark) {
+                        document.documentElement.classList.add("dark");
+                        }
+                    } catch (_) {}
+                    })();
+                    "#}
+                </script>
                 <AutoReload options=options.clone() />
                 <HydrationScripts options/>
                 <MetaTags/>
             </head>
-            <body>
+            <body class="bg-background text-foreground min-h-screen flex items-center justify-center px-4">
                 <App/>
             </body>
         </html>
@@ -26,6 +45,22 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
 #[component]
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
+    let theme = ThemeMode::init();
+
+    // 👇 THIS is what you're missing
+    Effect::new(move |_| {
+        use web_sys::window;
+
+        let document = window().unwrap().document().unwrap();
+        let html = document.document_element().unwrap();
+
+        if theme.get() {
+            html.class_list().remove_1("dark").unwrap();
+        } else {
+            html.class_list().add_1("dark").unwrap();
+        }
+    });
+
     provide_meta_context();
 
     view! {
@@ -39,23 +74,10 @@ pub fn App() -> impl IntoView {
         // content for this welcome page
         <Router>
             <main>
-                <Routes fallback=|| "Page not found.".into_view()>
+                <Routes fallback=move || Err404Page>
                     <Route path=StaticSegment("") view=HomePage/>
                 </Routes>
             </main>
         </Router>
-    }
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    let count = RwSignal::new(0);
-    let on_click = move |_| *count.write() += 1;
-
-    view! {
-        <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
     }
 }

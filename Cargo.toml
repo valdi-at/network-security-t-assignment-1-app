@@ -15,6 +15,10 @@ leptos_axum = { version = "0.8.0", optional = true }
 leptos_meta = { version = "0.8.0" }
 tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
 wasm-bindgen = { version = "0.2.106", optional = true }
+tw_merge = { version = "0.1.20", features = ["variant"] }
+icons = { version = "0.18.0", features = ["leptos"] }
+leptos_ui = "0.3.21"
+web-sys = { version = "0.3", features = [ "Window", "Storage", "MediaQueryList"] }
 
 [features]
 hydrate = [
