@@ -86,11 +86,7 @@ site/
 ```
 Set the following environment variables (updating for your project as needed):
 ```sh
-export LEPTOS_OUTPUT_NAME="{{project-name}}"
-export LEPTOS_SITE_ROOT="site"
-export LEPTOS_SITE_PKG_DIR="pkg"
-export LEPTOS_SITE_ADDR="127.0.0.1:3000"
-export LEPTOS_RELOAD_PORT="3001"
+export PORT="3000"
 ```
 Finally, run the server binary.
 
@@ -104,9 +100,5 @@ docker build -t THE_TAG .
 
 #### Example
 ``` bash
-LEPTOS_OUTPUT_NAME="network-security-t-assignment-1-app"
-LEPTOS_SITE_ROOT="site"
-LEPTOS_SITE_PKG_DIR="pkg"
-LEPTOS_SITE_ADDR="127.0.0.1:3000"
-LEPTOS_RELOAD_PORT="3001"
+PORT="3000"
 ```

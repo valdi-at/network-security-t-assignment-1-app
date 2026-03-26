@@ -31,7 +31,19 @@ RUN find | grep site && sleep 10
 
 FROM alpine:latest
 RUN apk add --no-cache ca-certificates
+
 WORKDIR /app
+
 COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/network-security-t-assignment-1-app /app/network-security-t-assignment-1-app
 COPY --from=builder /app/target/site /app/site
-ENTRYPOINT ["/app/network-security-t-assignment-1-app"]
+
+ENV LEPTOS_OUTPUT_NAME=network-security-t-assignment-1-app
+ENV LEPTOS_SITE_ROOT=site
+ENV LEPTOS_SITE_PKG_DIR=pkg
+ENV LEPTOS_RELOAD_PORT=3001
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/app/network-security-t-assignment-1-app"]
