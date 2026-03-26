@@ -7,7 +7,7 @@ use leptos_router::{
 
 use crate::{
     components::hooks::use_theme_mode::ThemeMode, components::navbar::Navbar,
-    pages::err404::Err404Page, pages::home::HomePage,
+    pages::err404::Err404Page, pages::home::HomePage, pages::index::IndexPage,
 };
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -78,7 +78,8 @@ pub fn App() -> impl IntoView {
         <Router>
             <main class="flex items-center justify-center min-h-screen">
                 <Routes fallback=move || Err404Page>
-                    <Route path=StaticSegment("") view=HomePage/>
+                    <Route path=StaticSegment("") view=IndexPage/>
+                    <Route path=StaticSegment("home") view=HomePage/>
                 </Routes>
             </main>
         </Router>
