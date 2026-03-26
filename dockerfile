@@ -22,6 +22,9 @@ RUN cargo build \
     --features ssr
 RUN rm -rf src
 
+COPY package.json package-lock.json ./
+RUN npm install
+
 COPY . .
 RUN cargo leptos build --release
 RUN find | grep site && sleep 10
