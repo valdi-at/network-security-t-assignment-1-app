@@ -9,7 +9,7 @@ pub fn Err404Page() -> impl IntoView {
     };
 
     view! {
-        <div class="text-center max-w-md">
+        <div class="text-center max-w-md animate-fade-up motion-reduce:animate-none">
             <h1 class="text-7xl font-extrabold text-primary">404</h1>
 
             <h2 class="mt-4 text-2xl font-semibold">
@@ -24,7 +24,7 @@ pub fn Err404Page() -> impl IntoView {
                 <Button href="/" size=ButtonSize::Lg>
                     "Go Home"
                 </Button>
-                <Button on:click=go_back variant=ButtonVariant::Outline  size=ButtonSize::Lg>
+                <Button on:click=go_back variant=ButtonVariant::Outline size=ButtonSize::Lg>
                     "Go Back"
                 </Button>
             </div>
@@ -36,7 +36,6 @@ pub fn Err404Page() -> impl IntoView {
                     </CardDescription>
                 </CardContent>
             </Card>
-
         </div>
     }
 }
