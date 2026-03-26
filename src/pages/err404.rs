@@ -12,7 +12,7 @@ pub fn Err404Page() -> impl IntoView {
         <div class="text-center max-w-md animate-fade-up motion-reduce:animate-none">
             <h1 class="text-7xl font-extrabold text-primary">404</h1>
 
-            <h2 class="mt-4 text-2xl font-semibold">
+            <h2 class="mt-4 text-2xl font-semibold text-muted-foreground">
                 "Page Not Found"
             </h2>
 
