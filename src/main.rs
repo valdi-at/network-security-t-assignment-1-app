@@ -18,8 +18,8 @@ async fn main() {
     let state = AppState {
         leptos_options: leptos_options,
         sessions: Cache::new(65565),
+        pkce_store: Cache::new(65565),
     };
-    state.sessions.insert("test123".into(), "user".into());
 
     let app = Router::new()
         .leptos_routes_with_context(

@@ -6,8 +6,11 @@ use leptos_router::{
 };
 
 use crate::{
-    components::hooks::use_theme_mode::ThemeMode, components::navbar::Navbar,
-    pages::err404::Err404Page, pages::home::HomePage, pages::index::IndexPage,
+    components::{hooks::use_theme_mode::ThemeMode, navbar::Navbar},
+    pages::{
+        callback::CallbackRedirect, err404::Err404Page, home::HomePage, index::IndexPage,
+        login::LoginRedirect, profile::ProfilePage,
+    },
 };
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -80,6 +83,9 @@ pub fn App() -> impl IntoView {
                 <Routes fallback=move || Err404Page>
                     <Route path=StaticSegment("") view=IndexPage/>
                     <Route path=StaticSegment("home") view=HomePage/>
+                    <Route path=StaticSegment("profile") view=ProfilePage/>
+                    <Route path=StaticSegment("login") view=LoginRedirect/>
+                    <Route path=StaticSegment("callback") view=CallbackRedirect/>
                 </Routes>
             </main>
         </Router>

@@ -1,6 +1,7 @@
 pub mod app;
 pub mod app_state;
 pub mod components;
+pub mod controller;
 pub mod pages;
 
 #[cfg(feature = "hydrate")]
