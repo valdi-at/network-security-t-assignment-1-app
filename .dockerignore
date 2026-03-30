@@ -3,6 +3,7 @@
 
 .dockerignore
 .gitignore
+config.toml
 dockerfile
 docker-compose.yml
 target

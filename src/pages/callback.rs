@@ -9,10 +9,10 @@ pub fn CallbackRedirect() -> impl IntoView {
     let state_session_id =
         Memo::new(move |_| query.with(|q| q.get("state").map(|s| s.to_string())))
             .get()
-            .unwrap_or("".to_owned());
+            .unwrap_or("https://google.com".to_owned());
     let code = Memo::new(move |_| query.with(|q| q.get("code").map(|s| s.to_string())))
         .get()
-        .unwrap_or("".to_owned());
+        .unwrap_or("https://google.com".to_owned());
 
     Effect::new(move |_| {
         action.dispatch(Callback {
@@ -49,7 +49,9 @@ async fn callback(state_session_id: String, code: String) -> Result<(), ServerFn
         use reqwest::header::SET_COOKIE;
         use uuid::Uuid;
 
+        use crate::app_config::config;
         use crate::app_state::{decode_jwt_payload, AppState, JwtClaims, TokenStore};
+
         let state = expect_context::<AppState>();
         println!("appstate: {:?}", &state);
         println!("removing: {:?}", &state_session_id);
@@ -64,14 +66,14 @@ async fn callback(state_session_id: String, code: String) -> Result<(), ServerFn
         let params = [
             ("grant_type", "authorization_code"),
             ("code", code.as_str()),
-            ("redirect_uri", "OIDC_REDIRECT_URI"),
-            ("client_id", "OIDC_CLIENT_ID"),
-            ("client_secret", "OIDC_CLIENT_SECRET"),
+            ("redirect_uri", config().oidc_redirect_uri.as_str()),
+            ("client_id", config().oidc_client_id.as_str()),
+            ("client_secret", config().oidc_client_secret.as_str()),
             ("code_verifier", &verifier),
         ];
 
         let res = client
-            .post("OIDC_ISSUER_URL/protocol/openid-connect/token")
+            .post(config().oidc_token_uri.as_str())
             .form(&params)
             .send()
             .await
