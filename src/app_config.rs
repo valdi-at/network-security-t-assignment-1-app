@@ -23,8 +23,8 @@ mod ssr {
     impl AppConfig {
         pub fn new() -> Result<AppConfig, ConfigError> {
             let cfg = Config::builder()
-                .add_source(config::File::with_name("config"))
-                .add_source(Environment::default())
+                .add_source(config::File::with_name("config").required(false))
+                .add_source(Environment::default().ignore_empty(true))
                 .build()?;
 
             Ok(cfg.try_deserialize()?)
