@@ -63,7 +63,7 @@ mod ssr {
 
     impl TokenStore {
         pub fn is_expired(&self) -> bool {
-            let claims = match decode_jwt_payload::<JwtClaims>(&self.access_token) {
+            let claims = match decode_jwt_payload::<JwtClaims>(&self.id_token.as_deref().unwrap()) {
                 Some(c) => c,
                 None => return true,
             };
@@ -74,6 +74,19 @@ mod ssr {
                 .as_secs();
 
             now >= claims.exp
+        }
+        pub fn get_username(&self) -> Option<String> {
+            let claims = match decode_jwt_payload::<JwtClaims>(&self.id_token.as_deref().unwrap()) {
+                Some(c) => c,
+                None => return None,
+            };
+
+            let extra_fields: HashMap<String, serde_json::Value> = claims.extra;
+
+            extra_fields
+                .get("preferred_username")
+                .and_then(|v| v.as_str())
+                .map(|s| s.to_string())
         }
     }
 

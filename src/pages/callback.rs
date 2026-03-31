@@ -94,7 +94,7 @@ async fn callback(state_session_id: String, code: String) -> Result<(), ServerFn
 
         let session_id = Uuid::new_v4().to_string();
 
-        let decoded_jwt: Option<JwtClaims> = decode_jwt_payload(token.access_token.as_str());
+        let decoded_jwt: Option<JwtClaims> = decode_jwt_payload(token.id_token.as_deref().unwrap());
         if let Some(jwt) = decoded_jwt {
             println!("JWT: {:?}", jwt);
         } else {

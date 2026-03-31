@@ -6,9 +6,9 @@ pub fn Navbar() -> impl IntoView {
         <nav class="nav" id="nav">
             <div class="nav-inner">
                 <div class="links">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
+                    <a href="/">Index</a>
+                    <a href="/home">Home</a>
+                    <a href="/profile">Profile</a>
                 </div>
             </div>
         </nav>

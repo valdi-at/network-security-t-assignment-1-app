@@ -1,26 +1,35 @@
 use crate::{
     components::ui::{button::*, card::*, theme_toggle::*},
-    controller::auth::auth_check,
+    controller::auth::auth_get_username,
 };
 use leptos::prelude::*;
 
 #[component]
 pub fn ProfilePage() -> impl IntoView {
-    let auth = Resource::new(|| (), |_| async { auth_check().await.unwrap_or(false) });
+    let auth = Resource::new(
+        || (),
+        |_| async { auth_get_username().await.unwrap_or(Some("".to_owned())) },
+    );
 
     view! {
         <Card class="max-w-lg lg:max-w-2xl">
             <CardHeader>
-                <CardTitle>"Home Page"</CardTitle>
+                <CardTitle>"Profile"</CardTitle>
             </CardHeader>
 
             <CardContent>
                 <CardDescription>
                     <Suspense fallback=|| view! { "Checking..." }>
                         {move || match auth.get() {
-                            Some(true) => view! { "Logged in" }.into_view(),
-                            Some(false) => view! { "Not logged in" }.into_view(),
-                            None => view! {"uh.."}.into_view(),
+                            Some(Some(username)) => view! {
+                                <h3>{username}</h3>
+                            }.into_any(),
+                            Some(None) => view! {
+                                <h1>"Not logged in"</h1>
+                             }.into_any(),
+                            None => view! {
+                                <h1>"Uhh..."</h1>
+                            }.into_any(),
                         }}
                     </Suspense>
                     <br/>
